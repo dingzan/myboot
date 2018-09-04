@@ -59,9 +59,12 @@ public class SysLoginController {
 		try{
 			password = MD5Utils.encrypt(username, password);
 			Subject subject = ShiroUtils.getSubject();
+			if (subject.isAuthenticated()) {
+				return R.error("请勿重复登陆");
+			}
 			UsernamePasswordToken token = new UsernamePasswordToken(username, password,rememberMe);
 			subject.login(token);
-			
+	        
 		}catch (UnknownAccountException e) {
 			return R.error(e.getMessage());
 		}catch (IncorrectCredentialsException e) {

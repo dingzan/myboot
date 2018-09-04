@@ -1,18 +1,20 @@
 package com.dingzan.system.conf;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -20,24 +22,35 @@ import com.dingzan.system.conf.UserRealm;
 
 
 
+
 @Configuration
 public class ShiroConfig {
-	@Bean
-	UserRealm userRealm() {
-		UserRealm userRealm = new UserRealm();
-		return userRealm;
-	}
-
-	@Bean
-	SecurityManager securityManager() {
-		DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-		securityManager.setRealm(userRealm());
-		
-		//注入记住我管理器
-        securityManager.setRememberMeManager(rememberMeManager());
-		return securityManager;
-	}
 	
+	@Bean("sessionManager")
+    public SessionManager sessionManager(RedisShiroSessionDAO redisShiroSessionDAO,
+                                         @Value("${sys.shiro.redis}") boolean shiroRedis){
+        DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
+        //设置session过期时间为1小时(单位：毫秒)，默认为30分钟
+        sessionManager.setGlobalSessionTimeout(60 * 60 * 1000);
+        sessionManager.setSessionValidationSchedulerEnabled(true);
+        sessionManager.setSessionIdUrlRewritingEnabled(false);
+
+        //如果开启redis缓存且sys.shiro.redis=true，则shiro session存到redis里
+        if(shiroRedis){
+            sessionManager.setSessionDAO(redisShiroSessionDAO);
+        }
+        return sessionManager;
+    }
+	
+	
+	@Bean("securityManager")
+    public SecurityManager securityManager(UserRealm userRealm, SessionManager sessionManager) {
+        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+        securityManager.setRealm(userRealm);
+        securityManager.setSessionManager(sessionManager);
+        securityManager.setRememberMeManager(rememberMeManager());
+        return securityManager;
+    }
 
     /**
      * cookie对象;
@@ -68,46 +81,46 @@ public class ShiroConfig {
         return cookieRememberMeManager;
     }
 
-	@Bean
-	ShiroFilterFactoryBean shiroFilterFactoryBean() {
-		ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
-		shiroFilterFactoryBean.setSecurityManager(securityManager());
-		shiroFilterFactoryBean.setLoginUrl("/login.html");
-		shiroFilterFactoryBean.setSuccessUrl("/index.html");
-		shiroFilterFactoryBean.setUnauthorizedUrl("/403");
-		Map<String, String> filterChainDefinitionMap = new HashMap<>();
-		filterChainDefinitionMap.put("/css/**", "anon");
-		filterChainDefinitionMap.put("/js/**", "anon");
-		filterChainDefinitionMap.put("/fonts/**", "anon");
-		filterChainDefinitionMap.put("/img/**", "anon");
-		filterChainDefinitionMap.put("/docs/**", "anon");
-		filterChainDefinitionMap.put("/logout", "logout");
-		//暂时不做认证========
-		//filterChainDefinitionMap.put("/**", "authc");
-		filterChainDefinitionMap.put("/**", "anon");
-		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
-		return shiroFilterFactoryBean;
-	}
+    @Bean("shiroFilter")
+    public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager) {
+        ShiroFilterFactoryBean shiroFilter = new ShiroFilterFactoryBean();
+        shiroFilter.setSecurityManager(securityManager);
+        shiroFilter.setLoginUrl("/login.html");
+        shiroFilter.setSuccessUrl("/index.html");
+        shiroFilter.setUnauthorizedUrl("/403");
 
-	@Bean("lifecycleBeanPostProcessor")
-	public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
-		return new LifecycleBeanPostProcessor();
-	}
+        Map<String, String> filterMap = new LinkedHashMap<>();
+        filterMap.put("/css/**", "anon");
+        filterMap.put("/js/**", "anon");
+        filterMap.put("/fonts/**", "anon");
+        filterMap.put("/img/**", "anon");
+        filterMap.put("/docs/**", "anon");
+        filterMap.put("/logout", "logout");
+        //暂时不做认证========
+        //filterMap.put("/**", "authc");
+        filterMap.put("/**", "anon");
+        shiroFilter.setFilterChainDefinitionMap(filterMap);
 
-	@Bean
-	public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
-		DefaultAdvisorAutoProxyCreator proxyCreator = new DefaultAdvisorAutoProxyCreator();
-		proxyCreator.setProxyTargetClass(true);
-		return proxyCreator;
-	}
+        return shiroFilter;
+    }
 
+    @Bean("lifecycleBeanPostProcessor")
+    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
+        return new LifecycleBeanPostProcessor();
+    }
 
-	@Bean
-	public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(
-			@Qualifier("securityManager") SecurityManager securityManager) {
-		AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
-		authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
-		return authorizationAttributeSourceAdvisor;
-	}
+    @Bean
+    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
+        DefaultAdvisorAutoProxyCreator proxyCreator = new DefaultAdvisorAutoProxyCreator();
+        proxyCreator.setProxyTargetClass(true);
+        return proxyCreator;
+    }
+
+    @Bean
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
+        AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
+        advisor.setSecurityManager(securityManager);
+        return advisor;
+    }
 
 }

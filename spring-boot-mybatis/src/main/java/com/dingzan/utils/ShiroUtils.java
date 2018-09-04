@@ -60,5 +60,6 @@ public class ShiroUtils {
 		getSession().removeAttribute(key);
 		return kaptcha.toString();
 	}
+	
 
 }

@@ -25,7 +25,7 @@ public class UserInfoController {
 	private UserInfoService UserInfoService;
 	
 	
-	@RequestMapping("/test")
+	@RequestMapping("/")
 	public String Hello() {
 		return "welcome!";
 	}

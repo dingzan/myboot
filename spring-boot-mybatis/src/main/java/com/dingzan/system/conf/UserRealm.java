@@ -14,13 +14,14 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.dingzan.system.dao.UserMapper;
 import com.dingzan.system.domain.User;
 import com.dingzan.system.service.MenuService;
 import com.dingzan.utils.ShiroUtils;
 
-
+@Component
 public class UserRealm extends AuthorizingRealm {
 	@Autowired
 	UserMapper userMapper;
@@ -75,5 +76,13 @@ public class UserRealm extends AuthorizingRealm {
 		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password, getName());
 		return info;
 	}
+	
+//	@Override
+//	public void setCredentialsMatcher(CredentialsMatcher credentialsMatcher) {
+//		HashedCredentialsMatcher shaCredentialsMatcher = new HashedCredentialsMatcher();
+//		shaCredentialsMatcher.setHashAlgorithmName(ShiroUtils.hashAlgorithmName);
+//		shaCredentialsMatcher.setHashIterations(ShiroUtils.hashIterations);
+//		super.setCredentialsMatcher(shaCredentialsMatcher);
+//	}
 
 }
