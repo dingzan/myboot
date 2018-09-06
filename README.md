@@ -20,3 +20,5 @@ Springboot作为容器，使用mybatis作为持久层框架
 
 5.整合druid
 6.整合redis。并管理shiro session
+7.整合kylin
+8.整合elasticsearch
