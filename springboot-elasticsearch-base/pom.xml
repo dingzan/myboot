@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.cun</groupId>
-	<artifactId>SpringBootSolrElasticsearch</artifactId>
+	<artifactId>springboot-elasticsearch-base</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
