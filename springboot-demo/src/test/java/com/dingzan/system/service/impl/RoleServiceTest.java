@@ -26,7 +26,7 @@ public class RoleServiceTest {
 	
 	@Test
 	public void selectRoleIdsByUserId(){
-		Long userId = (long) 31;
+		Long userId = (long) 127;
 		List<Long> RoleIds = userRoleService.selectRoleIdsByUserId(userId);
 		System.out.println(RoleIds.toString());
 	}
@@ -57,12 +57,12 @@ public class RoleServiceTest {
 	
 	@Test
 	public void removeTest(){
-		RoleService.remove((long) 58);
+		//RoleService.remove((long) 58);
 	}
 	
 	@Test
 	public void listByUserIdTest(){
-		List<Role> list = RoleService.list((long)36);
+		List<Role> list = RoleService.list((long)127);
 		list.forEach(x -> System.out.println(x.toString()));
 	}
 	

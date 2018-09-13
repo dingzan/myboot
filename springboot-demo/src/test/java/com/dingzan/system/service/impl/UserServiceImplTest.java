@@ -22,7 +22,7 @@ public class UserServiceImplTest {
 	
 	@Test
 	public void getTest() {
-		User userPojo = UserService.get((long) 1);
+		User userPojo = UserService.get((long) 127);
 		System.out.println(userPojo.toString());
 	}
 	
@@ -52,17 +52,17 @@ public class UserServiceImplTest {
 	
 	@Test
 	public void updateTest() {
-		User user = new User();
-		user.setUserId((long) 136);
-		user.setName("测试用户");
-		List<Long> roleIds = new ArrayList<Long>();
-		roleIds.add((long) 49);
-		user.setRoleIds(roleIds);
-		UserService.update(user);
+//		User user = new User();
+//		user.setUserId((long) 136);
+//		user.setName("测试用户");
+//		List<Long> roleIds = new ArrayList<Long>();
+//		roleIds.add((long) 49);
+//		user.setRoleIds(roleIds);
+//		UserService.update(user);
 	}
 	
 	@Test
 	public void removeTest(){
-		UserService.remove((long) 136);
+//		UserService.remove((long) 136);
 	}
 }
