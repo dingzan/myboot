@@ -24,7 +24,7 @@ import java.io.IOException;
  * 登录相关
  */
 @Controller
-@RequestMapping("/sys")
+@RequestMapping("/api")
 public class SysLoginController {
 	@Autowired
 	private Producer producer;

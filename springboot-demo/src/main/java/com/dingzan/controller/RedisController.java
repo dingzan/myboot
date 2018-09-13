@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dingzan.domain.Userinfo;
 import com.dingzan.service.RedisService;
 
-
 @RestController
+@RequestMapping("/api")
 public class RedisController {
 
 	@Autowired
