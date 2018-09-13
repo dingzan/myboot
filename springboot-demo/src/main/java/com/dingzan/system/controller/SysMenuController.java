@@ -11,7 +11,7 @@ import com.dingzan.utils.R;
 import com.dingzan.utils.Tree;
 
 @RestController
-@RequestMapping("/sys/menu")
+@RequestMapping("/api/menu")
 public class SysMenuController {
 
 	@Autowired

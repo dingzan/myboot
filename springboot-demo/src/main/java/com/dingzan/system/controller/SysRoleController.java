@@ -9,7 +9,7 @@ import com.dingzan.utils.DataGridResult;
 import com.dingzan.utils.R;
 
 @RestController
-@RequestMapping("/sys/role")
+@RequestMapping("/api/role")
 public class SysRoleController {
 
 	@Autowired

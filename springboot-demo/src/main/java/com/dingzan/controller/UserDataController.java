@@ -16,6 +16,7 @@ import com.dingzan.domain.UserdataExample.Criteria;
 
 
 @RestController
+@RequestMapping("/api")
 public class UserDataController {
 	
     private final Logger logger = LoggerFactory.getLogger(getClass());

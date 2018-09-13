@@ -15,7 +15,7 @@ import com.dingzan.utils.DataGridResult;
 import com.dingzan.utils.R;
 
 @RestController
-@RequestMapping("/sys/user")
+@RequestMapping("/api/user")
 public class SysUserController {
 	
 	@Autowired

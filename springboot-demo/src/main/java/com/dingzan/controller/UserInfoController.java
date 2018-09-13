@@ -15,21 +15,15 @@ import com.dingzan.domain.UserinfoExample.Criteria;
 import com.dingzan.service.UserInfoService;
 import com.dingzan.utils.DataGridResult;
 
-
 @RestController
+@RequestMapping("/api")
 public class UserInfoController {
 	
     private final Logger logger = LoggerFactory.getLogger(getClass());
     
 	@Autowired
 	private UserInfoService UserInfoService;
-	
-	
-	@RequestMapping("/")
-	public String Hello() {
-		return "welcome!";
-	}
-	
+
 	@RequestMapping("/test/pagelist")
 	public DataGridResult getUserInfoList(Integer page, Integer limit) {
 		logger.info("==========分页查询==========");
