@@ -17,7 +17,7 @@
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
         <!-- 生成实体类的包名和位置 ，targetPackage指的是包名,targetProject值得是路径位置-->
-        <javaModelGenerator targetPackage="com.dingzan.system.domain" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="com.dingzan.domain" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
@@ -26,16 +26,12 @@
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
         <!-- 生成DAO的包名和位置-->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.dingzan.system.dao" targetProject="src/main/java">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.dingzan.dao" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
         <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名-->
        <!--  <table tableName="test" domainObjectName="Test" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="false" enableSelectByExample="true" selectByExampleQueryId="false"></table> -->
     	<!-- 指定数据库表 -->
-		<table schema="" tableName="sys_menu" domainObjectName="Menu" ></table>
-		<table schema="" tableName="sys_role" domainObjectName="Role"></table>
-		<table schema="" tableName="sys_role_menu" domainObjectName="RoleMenu"></table>
-		<table schema="" tableName="sys_user" domainObjectName="User"></table>
-		<table schema="" tableName="sys_user_role" domainObjectName="UserRole"></table>
+		<table schema="" tableName="useractionreport" ></table>
     </context>
 </generatorConfiguration>
