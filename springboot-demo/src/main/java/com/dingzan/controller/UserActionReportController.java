@@ -62,7 +62,7 @@ public class UserActionReportController {
 		return R.ok().put("data", list);
 	}
 	
-	@GetMapping("/listdetail/{demension}")
+	@GetMapping("/detail/{demension}")
 	public R getReportDetail(@PathVariable("demension")String demension) {
 		
 		List<Date> createdays = new ArrayList<Date>();
