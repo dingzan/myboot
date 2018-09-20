@@ -7,15 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dingzan.domain.Userinfo;
 import com.dingzan.domain.UserinfoExample;
 import com.dingzan.domain.UserinfoExample.Criteria;
+import com.dingzan.pojo.UserInfoVO;
 import com.dingzan.service.UserInfoService;
 import com.dingzan.utils.DataGridResult;
-import com.dingzan.utils.QueryVO;
 
 @RestController
 @RequestMapping("/api/userinfo")
@@ -27,7 +28,7 @@ public class UserInfoController {
 
 	
 	@PostMapping("/page")
-	public DataGridResult getUserInfoList(QueryVO vo) {
+	public DataGridResult getUserInfoList(@RequestBody UserInfoVO vo) {
 		
 		//调用服务查询分页列表
 		DataGridResult userInfoList = UserInfoService.list(vo.getPageNo(), vo.getRows());
@@ -48,7 +49,7 @@ public class UserInfoController {
 	}
 	
 	@PostMapping("/query")
-	public List<Userinfo> getUserInfoBy(Userinfo userinfo) {
+	public List<Userinfo> getUserInfoBy(@RequestBody Userinfo userinfo) {
 		
 		UserinfoExample example = new UserinfoExample();
 		Criteria criteria = example.createCriteria();

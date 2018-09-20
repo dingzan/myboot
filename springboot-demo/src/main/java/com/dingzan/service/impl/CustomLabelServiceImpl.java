@@ -11,6 +11,7 @@ import com.dingzan.dao.CustomLabelMapper;
 import com.dingzan.domain.CustomLabel;
 import com.dingzan.domain.CustomLabelExample;
 import com.dingzan.domain.CustomLabelExample.Criteria;
+import com.dingzan.pojo.CustomLabelVO;
 import com.dingzan.service.CustomLabelService;
 import com.dingzan.utils.DataGridResult;
 import com.github.pagehelper.PageHelper;
@@ -24,24 +25,24 @@ public class CustomLabelServiceImpl implements CustomLabelService {
 	private CustomLabelMapper customLabelMapper;
 	
 	@Override
-	public DataGridResult list(CustomLabel customlabel, Integer pageNo, Integer rows) {
+	public DataGridResult list(CustomLabelVO vo) {
 		//设置分页信息
-		PageHelper.startPage(pageNo, rows);
+		PageHelper.startPage(vo.getPageNo(), vo.getRows());
 		//封装条件
 		CustomLabelExample example = new CustomLabelExample();
 		Criteria criteria = example.createCriteria();
-		if (StringUtils.isNotBlank(customlabel.getFirstcategory())) {
-			criteria.andFirstcategoryEqualTo(customlabel.getFirstcategory());
+		if (StringUtils.isNotBlank(vo.getFirstcategory())) {
+			criteria.andFirstcategoryEqualTo(vo.getFirstcategory());
 		}
-		if (StringUtils.isNotBlank(customlabel.getSecondcategory())) {
-			criteria.andSecondcategoryEqualTo(customlabel.getSecondcategory());
+		if (StringUtils.isNotBlank(vo.getSecondcategory())) {
+			criteria.andSecondcategoryEqualTo(vo.getSecondcategory());
 		}
-		if (StringUtils.isNotBlank(customlabel.getThirdcategory())) {
-			criteria.andThirdcategoryEqualTo(customlabel.getThirdcategory());
+		if (StringUtils.isNotBlank(vo.getThirdcategory())) {
+			criteria.andThirdcategoryEqualTo(vo.getThirdcategory());
 		}
-		if (StringUtils.isNotBlank(customlabel.getName())) {
+		if (StringUtils.isNotBlank(vo.getName())) {
 			
-			criteria.andNameLike("%"+customlabel.getName()+"%");;
+			criteria.andNameLike("%"+vo.getName()+"%");;
 		}
 		//执行查询
 		List<CustomLabel> list = customLabelMapper.selectByExample(example);

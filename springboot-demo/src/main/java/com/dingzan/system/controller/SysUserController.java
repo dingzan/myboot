@@ -7,14 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dingzan.pojo.UserVO;
 import com.dingzan.system.domain.User;
 import com.dingzan.system.service.UserRoleService;
 import com.dingzan.system.service.UserService;
 import com.dingzan.utils.DataGridResult;
-import com.dingzan.utils.QueryVO;
 import com.dingzan.utils.R;
 
 @RestController
@@ -32,9 +33,9 @@ public class SysUserController {
 	 */
 	@PostMapping("/list")
 	//@RequiresPermissions("sys:user:list")
-	public R list(QueryVO vo){
+	public R list(@RequestBody UserVO vo){
 		DataGridResult list = 
-				userService.list(vo.getUser().getName(), vo.getPageNo(), vo.getRows());
+				userService.list(vo.getName(), vo.getPageNo(), vo.getRows());
 		return R.ok().put("users", list);
 	}
 	

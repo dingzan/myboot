@@ -21,8 +21,6 @@ import org.springframework.context.annotation.Configuration;
 import com.dingzan.system.conf.UserRealm;
 
 
-
-
 @Configuration
 public class ShiroConfig {
 	
@@ -85,22 +83,16 @@ public class ShiroConfig {
     public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilter = new ShiroFilterFactoryBean();
         shiroFilter.setSecurityManager(securityManager);
-        shiroFilter.setLoginUrl("/login.html");
-        shiroFilter.setSuccessUrl("/index.html");
-        shiroFilter.setUnauthorizedUrl("/403");
+        // 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
+        shiroFilter.setLoginUrl("/api/tologin");
+        //未授权
+        shiroFilter.setUnauthorizedUrl("/api/403");
 
         Map<String, String> filterMap = new LinkedHashMap<>();
-        filterMap.put("/css/**", "anon");
-        filterMap.put("/js/**", "anon");
-        filterMap.put("/fonts/**", "anon");
-        filterMap.put("/img/**", "anon");
-        filterMap.put("/docs/**", "anon");
-        filterMap.put("/logout", "logout");
-        //暂时不做认证========
-        //filterMap.put("/**", "authc");
-        filterMap.put("/**", "anon");
-        shiroFilter.setFilterChainDefinitionMap(filterMap);
+        filterMap.put("/api/login", "anon");
+        filterMap.put("/api/**", "authc");
 
+        shiroFilter.setFilterChainDefinitionMap(filterMap);
         return shiroFilter;
     }
 

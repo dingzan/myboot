@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -30,6 +31,16 @@ import java.io.IOException;
 public class SysLoginController {
 	@Autowired
 	private Producer producer;
+	
+	/**
+	 * 返回登陆
+	 */
+	@GetMapping("/tologin")
+	@ResponseBody
+	public R tologin() {
+		return R.error("请先登陆！");
+	}
+	
 	
 	@GetMapping("kaptcha.jpg")
 	public void captcha(HttpServletResponse response)throws IOException {
@@ -52,7 +63,7 @@ public class SysLoginController {
 	 */
 	@ResponseBody
 	@PostMapping(value = "/login")
-	public R login(User user) {
+	public R login(@RequestBody User user) {
 //		String kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
 //		if(!captcha.equalsIgnoreCase(kaptcha)){
 //			return R.error("验证码不正确");
@@ -90,6 +101,8 @@ public class SysLoginController {
 		ShiroUtils.logout();
 		return R.ok();
 	}
+	
+	
 	
 }
 
