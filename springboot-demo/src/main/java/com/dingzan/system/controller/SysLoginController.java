@@ -1,5 +1,6 @@
 package com.dingzan.system.controller;
 
+import com.dingzan.system.domain.User;
 import com.dingzan.utils.MD5Utils;
 import com.dingzan.utils.R;
 import com.dingzan.utils.ShiroUtils;
@@ -10,8 +11,9 @@ import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.imageio.ImageIO;
@@ -29,7 +31,7 @@ public class SysLoginController {
 	@Autowired
 	private Producer producer;
 	
-	@RequestMapping("kaptcha.jpg")
+	@GetMapping("kaptcha.jpg")
 	public void captcha(HttpServletResponse response)throws IOException {
         response.setHeader("Cache-Control", "no-store, no-cache");
         response.setContentType("image/jpeg");
@@ -49,20 +51,21 @@ public class SysLoginController {
 	 * 登录
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/login")
-	public R login(String username, String password, String captcha,boolean rememberMe) {
-		String kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
-		if(!captcha.equalsIgnoreCase(kaptcha)){
-			return R.error("验证码不正确");
-		}
-		
+	@PostMapping(value = "/login")
+	public R login(User user) {
+//		String kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
+//		if(!captcha.equalsIgnoreCase(kaptcha)){
+//			return R.error("验证码不正确");
+//		}
+		String password = user.getPassword();
+		String username = user.getUsername();
 		try{
 			password = MD5Utils.encrypt(username, password);
 			Subject subject = ShiroUtils.getSubject();
 			if (subject.isAuthenticated()) {
 				return R.error("请勿重复登陆");
 			}
-			UsernamePasswordToken token = new UsernamePasswordToken(username, password,rememberMe);
+			UsernamePasswordToken token = new UsernamePasswordToken(username, password);
 			subject.login(token);
 	        
 		}catch (UnknownAccountException e) {
@@ -81,7 +84,8 @@ public class SysLoginController {
 	/**
 	 * 退出
 	 */
-	@RequestMapping(value = "logout", method = RequestMethod.GET)
+	@GetMapping("/logout")
+	@ResponseBody
 	public R logout() {
 		ShiroUtils.logout();
 		return R.ok();

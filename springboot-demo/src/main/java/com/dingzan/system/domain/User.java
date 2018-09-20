@@ -32,7 +32,12 @@ public class User implements Serializable{
     //角色
   	private List<Long> roleIds;
 
-    public Long getUserId() {
+  	
+    public User() {
+		super();
+	}
+
+	public Long getUserId() {
         return userId;
     }
 
