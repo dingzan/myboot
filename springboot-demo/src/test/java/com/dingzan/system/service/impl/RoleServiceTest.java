@@ -53,12 +53,9 @@ public class RoleServiceTest {
 		menuIds.add((long) 33);
 		role.setMenuIds(menuIds);
 		RoleService.update(role);
+		RoleService.remove((long) 58);
 	}
 	
-	@Test
-	public void removeTest(){
-		//RoleService.remove((long) 58);
-	}
 	
 	@Test
 	public void listByUserIdTest(){

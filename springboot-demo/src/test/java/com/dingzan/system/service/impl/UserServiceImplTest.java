@@ -1,7 +1,5 @@
 package com.dingzan.system.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,15 +37,15 @@ public class UserServiceImplTest {
 	
 	@Test
 	public void saveTest() {
-		User user = new User();
-		user.setUsername("test1");
-		user.setPassword(MD5Utils.encrypt("test1", "test1"));
-		List<Long> roleIds = new ArrayList<Long>();
-		roleIds.add((long) 48);
-		roleIds.add((long) 49);
-		user.setRoleIds(roleIds);
-		UserService.save(user);
-		System.out.println();
+//		User user = new User();
+//		user.setUsername("test1");
+//		user.setPassword(MD5Utils.encrypt("test1", "test1"));
+//		List<Long> roleIds = new ArrayList<Long>();
+//		roleIds.add((long) 48);
+//		roleIds.add((long) 49);
+//		user.setRoleIds(roleIds);
+//		UserService.save(user);
+//		System.out.println();
 	}
 	
 	@Test
