@@ -58,4 +58,25 @@ public class CustomLabelServiceImpl implements CustomLabelService {
 		return DataGridResult;
 	}
 
+	@Override
+	public CustomLabel get(Long id) {
+		return customLabelMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public int add(CustomLabel customLabel) {
+		return customLabelMapper.insertSelective(customLabel);
+	}
+
+	@Override
+	public int remove(Long id) {
+		return customLabelMapper.deleteByPrimaryKey(id);
+	}
+
+
+	@Override
+	public int update(CustomLabel customLabel) {
+		return customLabelMapper.updateByPrimaryKeySelective(customLabel);
+	}
+
 }
