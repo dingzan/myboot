@@ -90,7 +90,8 @@ public class ShiroConfig {
 
         Map<String, String> filterMap = new LinkedHashMap<>();
         filterMap.put("/api/login", "anon");
-        filterMap.put("/api/**", "authc");
+        //filterMap.put("/api/**", "authc");
+        filterMap.put("/api/**", "anon");
 
         shiroFilter.setFilterChainDefinitionMap(filterMap);
         return shiroFilter;
