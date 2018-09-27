@@ -78,6 +78,5 @@ public class CustomLabelController {
 		return R.ok().put("data", list);
 	}
 	
-	
     
 }
