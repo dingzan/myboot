@@ -40,9 +40,8 @@ public class CustomLabelServiceImpl implements CustomLabelService {
 		if (StringUtils.isNotBlank(vo.getThirdcategory())) {
 			criteria.andThirdcategoryEqualTo(vo.getThirdcategory());
 		}
-		if (StringUtils.isNotBlank(vo.getName())) {
-			
-			criteria.andNameLike("%"+vo.getName()+"%");;
+		if (StringUtils.isNotBlank(vo.getComment())) {
+			criteria.andCommentLike("%"+vo.getComment()+"%");
 		}
 		//执行查询
 		List<CustomLabel> list = customLabelMapper.selectByExample(example);

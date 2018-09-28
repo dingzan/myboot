@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,13 +25,13 @@ public class RedisController {
 	 * @param value
 	 * @return
 	 */
-	@RequestMapping("/setRedis")
+	@GetMapping("/setRedis")
 	public String setRedis(String key, String value) {
 		boolean set = redisService.set(key, value);
 		return "添加缓存"+set;
 	}
 
-	@RequestMapping("/setObjRedis")
+	@GetMapping("/setObjRedis")
 	public String setObjRedis() {
 		Userinfo userinfo = new Userinfo();
 		userinfo.setId((long) 1);
@@ -40,7 +41,7 @@ public class RedisController {
 		return "添加缓存"+set;
 	}
 	
-	@RequestMapping("/setListRedis")
+	@GetMapping("/setListRedis")
 	public String setListRedis() {
 		Userinfo userinfo = new Userinfo();
 		userinfo.setId((long) 1);
@@ -64,7 +65,7 @@ public class RedisController {
 	 * @param key
 	 * @return
 	 */
-	@RequestMapping("/delRedis")
+	@GetMapping("/delRedis")
 	public String delRedis(String key) {
 		redisService.remove(key);
 		return "删除成功";
@@ -76,7 +77,7 @@ public class RedisController {
 	 * @param key
 	 * @return
 	 */
-	@RequestMapping("/getRedis")
+	@GetMapping("/getRedis")
 	public Object getRedis(String key) {
 		Object value = redisService.get(key);
 		//String beanToJson = JSONUtils.beanToJson(value);
