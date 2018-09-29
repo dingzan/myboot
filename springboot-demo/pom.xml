@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.dingzan</groupId>
-	<artifactId>spring-boot-demo</artifactId>
+	<artifactId>bd-Protal</artifactId>
 	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
 	<name>spring-boot-demo</name>
-	<description>Demo project for Spring Boot </description>
+	<description>Demo project for bigdata protal </description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
