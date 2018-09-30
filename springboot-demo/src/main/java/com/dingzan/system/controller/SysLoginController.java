@@ -1,5 +1,6 @@
 package com.dingzan.system.controller;
 
+import com.dingzan.pojo.SysLoginForm;
 import com.dingzan.system.domain.User;
 import com.dingzan.utils.MD5Utils;
 import com.dingzan.utils.R;
@@ -42,7 +43,7 @@ public class SysLoginController {
 	}
 	
 	
-	@GetMapping("kaptcha.jpg")
+	@GetMapping("captcha.jpg")
 	public void captcha(HttpServletResponse response)throws IOException {
         response.setHeader("Cache-Control", "no-store, no-cache");
         response.setContentType("image/jpeg");
@@ -63,13 +64,13 @@ public class SysLoginController {
 	 */
 	@ResponseBody
 	@PostMapping(value = "/login")
-	public R login(@RequestBody User user) {
-//		String kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
-//		if(!captcha.equalsIgnoreCase(kaptcha)){
+	public R login(@RequestBody SysLoginForm form) {
+//		String captcha = ShiroUtils.getCaptcha(Constants.KAPTCHA_SESSION_KEY);
+//		if(!captcha.equalsIgnoreCase(form.getCaptcha())){
 //			return R.error("验证码不正确");
 //		}
-		String password = user.getPassword();
-		String username = user.getUsername();
+		String password = form.getPassword();
+		String username = form.getUsername();
 		try{
 			password = MD5Utils.encrypt(username, password);
 			Subject subject = ShiroUtils.getSubject();

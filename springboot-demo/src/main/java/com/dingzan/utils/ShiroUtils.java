@@ -52,13 +52,13 @@ public class ShiroUtils {
 		SecurityUtils.getSubject().logout();
 	}
 	
-	public static String getKaptcha(String key) {
-		Object kaptcha = getSessionAttribute(key);
-		if(kaptcha == null){
+	public static String getCaptcha(String key) {
+		Object captcha = getSessionAttribute(key);
+		if(captcha == null){
 			throw new BDException("验证码已失效");
 		}
 		getSession().removeAttribute(key);
-		return kaptcha.toString();
+		return captcha.toString();
 	}
 	
 

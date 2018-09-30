@@ -21,6 +21,12 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
+		<!--wagon plugin 配置-->
+		<service-path>/work/bd-Protal</service-path>
+		<pack-name>${project.artifactId}-${project.version}.jar</pack-name>
+		<remote-addr>192.168.1.10:22</remote-addr>
+		<remote-username>root</remote-username>
+		<remote-passwd>123456</remote-passwd>
 	</properties>
 
 	<dependencies>
@@ -53,7 +59,7 @@
 			<!-- 集成了jedis包 -->
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
-		
+		<!-- mysql驱动 -->
 		<dependency>
 	        <groupId>mysql</groupId>
 	        <artifactId>mysql-connector-java</artifactId>
@@ -65,21 +71,18 @@
 		    <artifactId>pagehelper-spring-boot-starter</artifactId>
 		    <version>1.2.3</version>
 		</dependency>
-		
 		<!--mybatis generator逆向工程-->
 		<dependency>
 	        <groupId>org.mybatis.generator</groupId>
 	        <artifactId>mybatis-generator-core</artifactId>
 	        <version>1.3.5</version>
     	</dependency>
-    	
     	<!-- Utils -->
     	<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 			<version>1.2.31</version>
 		</dependency>
-		
 		<!--shiro -->
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
@@ -150,6 +153,34 @@
 				    </dependency>
 			    </dependencies>
 	        </plugin>
+	        <!-- 跳过单元测试 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<skipTests>true</skipTests>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>wagon-maven-plugin</artifactId>
+				<version>1.0</version>
+				<configuration>
+					<fromFile>target/${pack-name}</fromFile>
+					<url><![CDATA[scp://${remote-username}:${remote-passwd}@${remote-addr}${service-path}]]></url>
+					<commands>
+						<!-- Kill Old Process -->
+						<command>kill -9 `ps -ef |grep ${project.artifactId}.jar|grep -v "grep" |awk '{print $2}'`</command>
+						<!-- Restart jar package，write result into renren.log -->
+						<command><![CDATA[nohup java -jar ${service-path}/${pack-name} --spring.profiles.active=dev > ${service-path}/bd-Protal.log 2>&1 & ]]></command>
+						<command><![CDATA[netstat -nptl]]></command>
+						<command><![CDATA[ps -ef | grep java | grep -v grep]]></command>
+					</commands>
+					<!-- 运行命令 mvn clean package wagon:upload-single wagon:sshexec-->
+					<displayCommandOutputs>true</displayCommandOutputs>
+				</configuration>
+			</plugin>
+	        
 		</plugins>
 	</build>
 	
