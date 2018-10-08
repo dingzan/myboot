@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -19,11 +18,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @EnableWebMvc
 public class WebConfig extends WebMvcConfigurerAdapter {
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        //允许全部请求跨域
-        registry.addMapping("/**");
-    }
     
     //定义时间格式转换器
     @Bean
@@ -40,7 +34,9 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         converters.add(jackson2HttpMessageConverter());
     }
     
-    //swagger2
+    /**
+     * swagger2
+     */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/js/**").addResourceLocations("classpath:/js/");

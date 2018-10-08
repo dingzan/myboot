@@ -7,7 +7,6 @@ server:
   port: 8080
   connection-timeout: 5000
 
-
 spring:
   # 环境 dev|test|prod
   profiles:
@@ -40,7 +39,6 @@ spring:
   resources:
     add-mappings: false
 
-
 mybatis:
    mapper-locations: classpath:mybatis/mapper/*.xml
    type-aliases-package: com.dingzan.domain;com.dingzan.system.domain
@@ -52,7 +50,6 @@ pagehelper:
    supportMethodsArguments: true
    params: pageNum=pageNum;pageSize=pageSize;
 
-
 #shiro redis 
 sys:
   shiro:
@@ -60,4 +57,8 @@ sys:
     
 #log
 logging:
-   config: classpath:logback-boot.xml
+   #config: classpath:logback-boot.xml
+   level:
+     root: info
+     org.mybatis: info
+     com.dingzan: debug
