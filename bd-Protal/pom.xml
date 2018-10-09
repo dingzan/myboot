@@ -8,7 +8,7 @@
 	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
-	<name>spring-boot-demo</name>
+	<name>bd-Protal</name>
 	<description>Demo project for bigdata protal </description>
 
 	<parent>
