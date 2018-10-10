@@ -4,11 +4,11 @@
   
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.dingzan</groupId>
-	<artifactId>springboot-ActivityMQ-example</artifactId>
+	<artifactId>springboot-activemq-example</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
   	<packaging>jar</packaging>
  
-	<name>springboot-ActivityMQ</name>
+	<name>springboot-activemq-example</name>
 	<description>Demo project for Spring Boot Jms</description>
  
 	<parent>
