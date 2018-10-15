@@ -13,13 +13,8 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
 
 import java.net.InetAddress;
 
-//http://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-nosql.html#boot-features-connecting-to-elasticsearch-spring-data
-//https://github.com/spring-projects/spring-boot/tree/master/spring-boot-samples/spring-boot-sample-data-elasticsearch/src/main/java/sample/data/elasticsearch
-//http://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html/#elasticsearch.repositories
-//http://geekabyte.blogspot.my/2015/08/embedding-elasticsearch-in-spring.html
-//https://github.com/spring-projects/spring-data-elasticsearch/wiki/Spring-Data-Elasticsearch---Spring-Boot---version-matrix
 @Configuration
-@EnableElasticsearchRepositories(basePackages = "com.mkyong.book.repository")
+@EnableElasticsearchRepositories(basePackages = "com.dingzan.book.repository")
 public class EsConfig {
 
     @Value("${elasticsearch.host}")
@@ -38,7 +33,6 @@ public class EsConfig {
                 .put("cluster.name", EsClusterName)
                 .build();
 
-        //https://www.elastic.co/guide/en/elasticsearch/guide/current/_transport_client_versus_node_client.html
         return TransportClient.builder()
                 .settings(esSettings)
                 .build()
@@ -49,11 +43,5 @@ public class EsConfig {
     public ElasticsearchOperations elasticsearchTemplate() throws Exception {
         return new ElasticsearchTemplate(client());
     }
-
-    //Embedded Elasticsearch Server
-    /*@Bean
-    public ElasticsearchOperations elasticsearchTemplate() {
-        return new ElasticsearchTemplate(nodeBuilder().local(true).node().client());
-    }*/
 
 }

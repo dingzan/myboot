@@ -13,7 +13,7 @@ public class MessageSender {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
-    @Scheduled(fixedRate = 2000)
+    //@Scheduled(fixedRate = 2000)
     public void sendMessage(){
         stringRedisTemplate.convertAndSend("chat",String.valueOf(Math.random()));
     }
