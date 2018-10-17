@@ -19,6 +19,7 @@ Springboot作为容器，使用mybatis作为持久层框架
   4.3. 菜单管理
 
 5.整合druid
-6.整合redis。并管理shiro session
-7.整合kylin
+6.整合redis。单机、集群
+7.整合kylin api
 8.整合elasticsearch
+9.整合activemq 单机、集群 兼容模式、持久订阅模式
