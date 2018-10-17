@@ -20,6 +20,15 @@ import javax.jms.ConnectionFactory;
 @EnableJms
 public class JmsConfiguration {
 	
+//	@Bean(name = "connectionFactory") 
+//	public ActiveMQConnectionFactory getconnectionFactory(@Value("${spring.activemq.broker-url}") String brokerUrl, @Value("${spring.activemq.user}") String userName, @Value("${spring.activemq.password}") String password) { 
+//		ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(); 
+//		connectionFactory.setBrokerURL(brokerUrl); 
+//		connectionFactory.setUserName(userName); 
+//		connectionFactory.setPassword(password); 
+//		return connectionFactory; 
+//	}
+	
     /**
      * topic模式的ListenerContainer
      * @param activeMQConnectionFactory
