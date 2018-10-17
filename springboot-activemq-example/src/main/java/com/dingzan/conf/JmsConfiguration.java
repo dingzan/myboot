@@ -6,7 +6,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.config.JmsListenerContainerFactory;
-
+import org.springframework.jms.connection.CachingConnectionFactory;
+import org.springframework.jms.core.JmsTemplate;
 import javax.jms.ConnectionFactory;
 
 /**
@@ -29,10 +30,6 @@ public class JmsConfiguration {
         DefaultJmsListenerContainerFactory bean = new DefaultJmsListenerContainerFactory();
         bean.setPubSubDomain(true);
         bean.setConnectionFactory(activeMQConnectionFactory);
-        /**
-         * 使用消息转换器
-         */
-        //bean.setMessageConverter(jacksonJmsMessageConverter());
         return bean;
     }
     
@@ -45,10 +42,6 @@ public class JmsConfiguration {
     public JmsListenerContainerFactory<?> jmsListenerContainerQueue(ConnectionFactory activeMQConnectionFactory) {
         DefaultJmsListenerContainerFactory bean = new DefaultJmsListenerContainerFactory();
         bean.setConnectionFactory(activeMQConnectionFactory);
-        /**
-         * 使用消息转换器
-         */
-        //bean.setMessageConverter(jacksonJmsMessageConverter());
         return bean;
     }
     
@@ -79,12 +72,12 @@ public class JmsConfiguration {
     }
     
     //减少重复创建session的问题
-    @Bean(name = "myJmsTemplate")
-    public JmsTemplate getJmsTemplate(ActiveMQConnectionFactory nonXaJmsConnectionFactory){
+    @Bean(name = "JmsTemplate")
+    public JmsTemplate getJmsTemplate(ConnectionFactory connectionFactory){
         //使用CachingConnectionFactory可以提高部分性能。
         CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory();
         cachingConnectionFactory.setSessionCacheSize(100);
-        cachingConnectionFactory.setTargetConnectionFactory(nonXaJmsConnectionFactory);
+        cachingConnectionFactory.setTargetConnectionFactory(connectionFactory);
         JmsTemplate jmsTemplate = new JmsTemplate(cachingConnectionFactory);
         //设置deliveryMode（持久化）, priority, timeToLive必须开启
         jmsTemplate.setExplicitQosEnabled(true);
@@ -96,16 +89,7 @@ public class JmsConfiguration {
         jmsTemplate.setSessionTransacted(true);
         return jmsTemplate;
     }
+
     
-    /**
-     * 消息转换器
-     * @return
-     */
-//    @Bean
-//    public MessageConverter jacksonJmsMessageConverter() {
-//        MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
-//        converter.setTargetType(MessageType.TEXT);
-//        converter.setTypeIdPropertyName("_type");
-//        return converter;
-//    }
+    
 }

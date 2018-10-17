@@ -19,7 +19,7 @@ public class ProducerServiceImpl implements ProducerService{
         jmsMessagingTemplate.convertAndSend(destination,message);
     }
 
-    @JmsListener(destination = "return-queue",containerFactory = "jmsListenerContainerTopic")
+    @JmsListener(destination = "out.queue",containerFactory = "jmsListenerContainerQueue")
     public void Message(String message){
         System.out.println("Product收到:"+message);
     }

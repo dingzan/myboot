@@ -18,9 +18,11 @@ import com.dingzan.producer.ProducerService;
 @SpringBootTest
 public class ActiveMQTest {
 	
-    Queue queue = new ActiveMQQueue("zh-queue");
+    Queue queue = new ActiveMQQueue("portal.admin.queue");
 	
-    Topic topic = new ActiveMQTopic("zh-topic");
+    Topic topic = new ActiveMQTopic("portal.admin.topic");
+    
+    Topic topic2 = new ActiveMQTopic("portal.admin.topic2");
     
     @Autowired
     private ProducerService producerService;
@@ -34,5 +36,11 @@ public class ActiveMQTest {
     public void sendTopic(){
     	producerService.sendMessage(this.topic,"hello test-topic");
     }
+    
+    @Test
+    public void sendTopic2(){
+    	producerService.sendMessage(this.topic2,"hello persist-topic");
+    }
+    
 
 }
