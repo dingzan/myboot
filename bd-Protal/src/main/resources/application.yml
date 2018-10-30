@@ -62,3 +62,6 @@ logging:
      root: info
      org.mybatis: info
      com.dingzan: debug
+     
+#允许访问监控点信息
+#management.security.enabled: false  
