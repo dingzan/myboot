@@ -5,25 +5,35 @@ import com.dingzan.domain.Userinfo;
 public class UserInfoVO extends Userinfo{
 	
 	
-	private int pageNo;
+	private int page;
 	
-	private int rows;
+	private int limit;
 
-	public int getPageNo() {
-		return pageNo;
+	
+
+	public int getPage() {
+		return page;
 	}
 
-	public void setPageNo(int pageNo) {
-		this.pageNo = pageNo;
+
+
+	public void setPage(int page) {
+		this.page = page;
 	}
 
-	public int getRows() {
-		return rows;
+
+
+	public int getLimit() {
+		return limit;
 	}
 
-	public void setRows(int rows) {
-		this.rows = rows;
+
+
+	public void setLimit(int limit) {
+		this.limit = limit;
 	}
+
+
 
 	public UserInfoVO() {
 		super();

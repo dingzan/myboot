@@ -3,6 +3,11 @@ package com.dingzan.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 菜单树工具类
+ * @author dingzan
+ *
+ */
 public class BuildTree {
 
 	public static <T> Tree<T> build(List<Tree<T>> nodes) {

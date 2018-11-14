@@ -9,9 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dingzan.dao.UserinfoMapper;
 import com.dingzan.domain.Userinfo;
-import com.dingzan.domain.UserinfoExample;
 import com.dingzan.service.UserInfoService;
-import com.dingzan.utils.DataGridResult;
+import com.dingzan.utils.LayGridResult;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -24,31 +23,20 @@ public class UserInfoServiceImpl implements UserInfoService {
 	private UserinfoMapper UserinfoMapper;
 	
 	@Override
-	public DataGridResult list(Integer page, Integer limit) {
-		
+	public LayGridResult findAll(int page,int limit) {
 		//设置分页信息
 		PageHelper.startPage(page, limit);
-		//执行查询
-		UserinfoExample userinfoExample = new UserinfoExample();
-		List<Userinfo> list = UserinfoMapper.selectByExample(userinfoExample);
+		List<Userinfo> list = UserinfoMapper.selectByExample(null);
 		//创建返回值对象
-		DataGridResult DataGridResult = new DataGridResult();
-		DataGridResult.setRows(list);
+		LayGridResult result = null;
+		if (list.size()==0) {
+			return new LayGridResult(1, "error");
+		}
+		result = new LayGridResult(0, "success");
+		result.setData(list);
 		//取分页结果
 		PageInfo<Userinfo> pageInfo = new PageInfo<>(list);
-		//取总记录数
-		long total = pageInfo.getTotal();
-		DataGridResult.setTotal(total);
-		
-		return DataGridResult;
-
-	}
-
-	@Override
-	public List<Userinfo> listByExample(UserinfoExample example) {
-		
-		List<Userinfo> list = UserinfoMapper.selectByExample(example);
-		
-		return list;
+		result.setCount(pageInfo.getTotal());
+		return result;
 	}
 }
