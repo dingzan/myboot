@@ -15,6 +15,7 @@ import com.dingzan.domain.CustomLabel;
 import com.dingzan.pojo.CustomLabelVO;
 import com.dingzan.service.CategoryService;
 import com.dingzan.service.CustomLabelService;
+import com.dingzan.service.CustomerInfoService;
 import com.dingzan.utils.DataGridResult;
 import com.dingzan.utils.R;
 
@@ -28,11 +29,22 @@ public class CustomLabelController {
 	@Autowired
 	private CategoryService categoryService;
 	
+	@Autowired
+	private CustomerInfoService CustomerInfoService;
+	
 	@PostMapping("/query")
 	public R query(@RequestBody CustomLabelVO vo){
 		DataGridResult list = customLabelService.list(vo);
 		return R.ok().put("data",list);
 		
+	}
+	//根据标签查询用户群体
+	@GetMapping("/findcus")
+	public R findByCusLabel(String  cusLabel){
+		
+		DataGridResult dataGridResult = CustomerInfoService.findByCusLabel(cusLabel);
+		
+		return R.ok().put("data",dataGridResult);
 	}
 	
 	@GetMapping("/get/{id}")

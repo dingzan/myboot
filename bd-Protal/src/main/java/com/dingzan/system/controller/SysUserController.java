@@ -6,12 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dingzan.pojo.UserVO;
 import com.dingzan.system.domain.User;
 import com.dingzan.system.service.UserRoleService;
 import com.dingzan.system.service.UserService;
@@ -31,11 +28,10 @@ public class SysUserController {
 	/**
 	 * 所有用户列表
 	 */
-	@PostMapping("/list")
+	@GetMapping("/list")
 	//@RequiresPermissions("sys:user:list")
-	public R list(@RequestBody UserVO vo){
-		DataGridResult list = 
-				userService.list(vo.getName(), vo.getPageNo(), vo.getRows());
+	public R list(String keyworld,Integer pageNo,Integer limit){
+		DataGridResult list = userService.list(keyworld, pageNo, limit);
 		return R.ok().put("users", list);
 	}
 	

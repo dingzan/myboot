@@ -11,5 +11,7 @@ public interface CustomerInfoService {
 	CustomerInfoVO getinfo(Long id);
 	
 	DataGridResult getaccount(int pageNo, int rows, Long cusId);
+
+	DataGridResult findByCusLabel(String cusLabel);
 	
 }

@@ -93,5 +93,25 @@ public class CustomerInfoServiceImpl implements CustomerInfoService{
 		
 		return DataGridResult;
 	}
+	
+	@Override
+	public DataGridResult findByCusLabel(String cusLabel) {
+		//默认分页参数
+		PageHelper.startPage(1, 10);
+		CustomerInfoExample example = new CustomerInfoExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andCusLabelLike("%"+cusLabel+"%");
+		criteria.andCusLabelNotLike("%中"+cusLabel+"%");
+		List<CustomerInfo> list = customerInfoMapper.selectByExample(example);
+		DataGridResult DataGridResult = new DataGridResult();
+		DataGridResult.setRows(list);
+		//取分页结果
+		PageInfo<CustomerInfo> pageInfo = new PageInfo<>(list);
+		//取总记录数
+		long total = pageInfo.getTotal();
+		DataGridResult.setTotal(total);
+		
+		return DataGridResult;
+	}
 
 }

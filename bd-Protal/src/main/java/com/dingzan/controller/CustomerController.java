@@ -41,7 +41,5 @@ public class CustomerController {
 		
 		return R.ok().put("data",dataGridResult);
 	}
-	
-	
     
 }
